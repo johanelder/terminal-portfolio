@@ -19,13 +19,13 @@
 - [x] Backend `Dockerfile` (multi-stage: TS compile → Node run)
 - [x] `.dockerignore` files for both services
 - [x] GitHub Actions pipeline — `.github/workflows/deploy.yml`
-- [ ] GCP: Create Artifact Registry repository
-- [ ] GCP: Create Cloud Run services (frontend + backend)
+- [x] GCP: Create Artifact Registry repository
+- [x] GCP: Create Cloud Run services (frontend + backend)
 - [ ] GCP: Create Cloud SQL instance (MySQL 8)
-- [ ] GCP: Create Service Account + download key JSON
-- [ ] GitHub: Add all secrets to repo settings
-- [ ] Push to `main` → validate pipeline runs end to end
-- [ ] Confirm health check passes post-deploy
+- [x] GCP: Create Service Account + download key JSON
+- [x] GitHub: Add all secrets to repo settings
+- [x] Push to `main` → validate pipeline runs end to end
+- [ ] Confirm health check passes post-deploy (blocked: Cloud Run requires --allow-unauthenticated flag — fix in next push)
 
 ---
 
@@ -115,4 +115,4 @@
 
 ---
 
-*Last updated: Slice 1 in progress*
+*Last updated: Slice 1 nearly complete — health check fix pending*
