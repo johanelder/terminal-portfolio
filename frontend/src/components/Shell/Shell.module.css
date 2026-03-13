@@ -1,0 +1,12 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.boxRow {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 48px 24px 0;
+}

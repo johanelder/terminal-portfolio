@@ -21,7 +21,7 @@
 - [x] GitHub Actions pipeline — `.github/workflows/deploy.yml`
 - [x] GCP: Create Artifact Registry repository
 - [x] GCP: Create Cloud Run services (frontend + backend)
-- [ ] GCP: Create Cloud SQL instance (MySQL 8)
+- [ ] GCP: Create Cloud SQL instance (MySQL 8) — deferred to Slice 4
 - [x] GCP: Create Service Account + download key JSON
 - [x] GitHub: Add all secrets to repo settings
 - [x] Push to `main` → validate pipeline runs end to end
@@ -31,20 +31,20 @@
 
 ## Slice 2 — Main Page Shell & Animation
 
-- [ ] Header bar component
-- [ ] `>_` login prompt (top right, navigates to `/login`)
-- [ ] Three-box idle state (ABOUT, RESUME, PROJECTS)
-- [ ] Hover glow effect on boxes
-- [ ] Expand/collapse animation (box grows down into viewport)
-- [ ] `activePanel` state model wired up
-- [ ] `[x]` close button per expanded panel
-- [ ] `useTypewriter` custom hook
-- [ ] Typewriter text renders on panel expand
-- [ ] Static content for About panel
-- [ ] Static content for Resume panel
-- [ ] Static content for Projects panel
-- [ ] JetBrains Mono font loaded via Google Fonts
-- [ ] Terminal aesthetic CSS (black bg, green text, glowing borders)
+- [x] Header bar component
+- [x] `>_` login prompt (top right, navigates to `/login`)
+- [x] Three-box idle state (ABOUT, RESUME, PROJECTS)
+- [x] Hover glow effect on boxes
+- [x] Expand/collapse animation (box grows down into viewport)
+- [x] `activePanel` state model wired up
+- [x] `[x]` close button per expanded panel
+- [x] `useTypewriter` custom hook
+- [x] Typewriter text renders on panel expand
+- [x] Static content for About panel (placeholder)
+- [x] Static content for Resume panel (placeholder)
+- [x] Static content for Projects panel (placeholder)
+- [x] JetBrains Mono font loaded via Google Fonts
+- [x] Terminal aesthetic CSS (black bg, green text, glowing borders)
 
 ---
 
@@ -115,4 +115,4 @@
 
 ---
 
-*Last updated: Slice 1 nearly complete — health check fix pending*
+*Last updated: Slice 1 complete. Slice 2 complete.*

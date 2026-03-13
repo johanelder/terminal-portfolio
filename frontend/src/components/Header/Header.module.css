@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--color-green);
+}
+
+.loginPrompt {
+  font-size: 1rem;
+  color: var(--color-green);
+  cursor: pointer;
+  transition: text-shadow 0.2s;
+}
+
+.loginPrompt:hover {
+  text-shadow: var(--color-glow);
+}

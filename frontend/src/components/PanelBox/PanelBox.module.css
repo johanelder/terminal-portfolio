@@ -1,0 +1,52 @@
+.idleBox {
+  border: 1px solid var(--color-green);
+  padding: 16px 32px;
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  transition: box-shadow 0.2s, text-shadow 0.2s;
+  user-select: none;
+}
+
+.idleBox:hover {
+  box-shadow: var(--color-glow);
+  text-shadow: var(--color-glow);
+}
+
+.expandedBox {
+  position: fixed;
+  top: 48px;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  border: 1px solid var(--color-green);
+  box-shadow: var(--color-glow);
+  background-color: var(--color-bg);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.closeBtn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--color-green);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: text-shadow 0.2s;
+}
+
+.closeBtn:hover {
+  text-shadow: var(--color-glow);
+}
+
+.content {
+  flex: 1;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
