@@ -3,7 +3,7 @@
 :root {
   --color-bg: #000000;
   --color-green: #00FF00;
-  --color-glow: 0 0 8px #00FF00;
+  --color-glow: 0 0 6px #00FF00, 0 0 18px #00FF00;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
