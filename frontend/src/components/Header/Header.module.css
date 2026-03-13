@@ -10,9 +10,10 @@
   font-size: 1rem;
   color: var(--color-green);
   cursor: pointer;
-  transition: text-shadow 0.2s;
+  transition: text-shadow 0.2s, color 0.2s;
 }
 
 .loginPrompt:hover {
-  text-shadow: var(--color-glow);
+  color: #ffffff;
+  text-shadow: 0 0 6px #00FF00, 0 0 18px #00FF00;
 }

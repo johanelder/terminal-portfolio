@@ -15,10 +15,10 @@
 
 .expandedBox {
   position: fixed;
-  top: 8%;
-  left: 10%;
-  right: 10%;
-  bottom: 8%;
+  top: 18%;
+  left: 20%;
+  right: 20%;
+  bottom: 18%;
   border: 1px solid var(--color-green);
   box-shadow: var(--color-glow);
   background-color: var(--color-bg);
