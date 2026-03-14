@@ -50,14 +50,14 @@
 
 ## Slice 3 — Easter Egg & Space Invaders
 
-- [ ] Space Invaders logo placed at bottom center
-- [ ] Logo invisible at rest (`opacity: 0`)
-- [ ] Logo fades in and glows on hover (CSS transition)
-- [ ] Click triggers expand animation (grows up from bottom)
-- [ ] Space Invaders Canvas game component
-- [ ] Game loop runs inside expanded panel
-- [ ] Game loop cleans up on panel close (`useEffect` cleanup)
-- [ ] `[x]` closes the panel and stops the game
+- [x] Space Invaders logo placed at bottom center
+- [x] Logo invisible at rest (`opacity: 0`)
+- [x] Logo fades in and glows on hover (CSS transition)
+- [x] Click triggers expand animation (grows up from bottom)
+- [x] Space Invaders Canvas game component
+- [x] Game loop runs inside expanded panel
+- [x] Game loop cleans up on panel close (`useEffect` cleanup)
+- [x] `[x]` closes the panel and stops the game
 
 ---
 
@@ -115,4 +115,4 @@
 
 ---
 
-*Last updated: Slice 1 complete. Slice 2 complete. UI polish done. Ready for Slice 3.*
+*Last updated: Slices 1, 2, 3 complete. Ready for Slice 4 (database + auth).*

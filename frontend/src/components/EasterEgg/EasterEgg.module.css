@@ -1,0 +1,49 @@
+.logo {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--color-green);
+  opacity: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: opacity 0.35s, text-shadow 0.35s;
+}
+
+.logo:hover {
+  opacity: 1;
+  text-shadow: var(--color-glow);
+}
+
+.panel {
+  position: fixed;
+  top: 14%;
+  left: 12%;
+  right: 12%;
+  bottom: 14%;
+  border: 1px solid var(--color-green);
+  box-shadow: var(--color-glow);
+  background-color: var(--color-bg);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.closeBtn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: text-shadow 0.2s;
+}
+
+.closeBtn:hover {
+  text-shadow: var(--color-glow);
+}

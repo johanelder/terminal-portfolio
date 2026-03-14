@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from '../Header/Header'
 import PanelBox from '../PanelBox/PanelBox'
+import EasterEgg from '../EasterEgg/EasterEgg'
 import styles from './Shell.module.css'
 
 type Panel = 'about' | 'resume' | 'projects' | null
@@ -29,6 +30,7 @@ export default function Shell() {
           />
         ))}
       </div>
+      <EasterEgg />
     </div>
   )
 }
