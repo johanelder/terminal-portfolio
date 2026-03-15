@@ -63,14 +63,15 @@
 
 ## Slice 4 — Database & Auth Backend
 
-- [ ] Cloud SQL schema applied (`users` + `posts` tables)
-- [ ] MySQL connection pool (`src/db/connection.ts`)
-- [ ] `POST /api/auth/register` endpoint
-- [ ] `POST /api/auth/login` endpoint (returns JWT)
-- [ ] `GET /api/auth/me` endpoint
-- [ ] `POST /api/auth/logout` (client-side clear documented)
-- [ ] `authGuard` middleware (JWT verify + role check)
-- [ ] Tests for all auth routes (Jest + Supertest)
+- [ ] Cloud SQL schema applied (`users` + `posts` tables) — apply manually: `db/schema.sql`
+- [x] MySQL connection pool (`src/db/connection.ts`) — socket (Cloud Run) + TCP (CI/local)
+- [x] `POST /api/auth/register` endpoint (with input validation)
+- [x] `POST /api/auth/login` endpoint (returns JWT, 7d expiry)
+- [x] `GET /api/auth/me` endpoint
+- [x] `POST /api/auth/logout` (client-side clear)
+- [x] `authGuard` middleware (JWT verify + role check)
+- [x] `adminGuard` middleware (role === 'admin')
+- [x] Tests for all auth routes (Jest + Supertest + real MySQL via CI service container)
 
 ---
 

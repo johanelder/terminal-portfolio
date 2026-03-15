@@ -15,6 +15,23 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: testroot
+          MYSQL_DATABASE: portfolio_test
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -25,6 +42,12 @@ jobs:
 
       - name: Install & test backend
         working-directory: backend
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USER: test
+          DB_PASSWORD: test
+          DB_NAME: portfolio_test
+          JWT_SECRET: ci-test-secret-not-for-production
         run: |
           npm ci
           npm test
@@ -88,12 +111,13 @@ jobs:
           region: ${{ env.GCP_REGION }}
           image: ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/backend:${{ github.sha }}
           flags: --allow-unauthenticated
+          cloudsql_instances: ${{ secrets.CLOUD_SQL_CONNECTION_NAME }}
           env_vars: |
             JWT_SECRET=${{ secrets.JWT_SECRET }}
-            DB_HOST=${{ secrets.DB_HOST }}
             DB_USER=${{ secrets.DB_USER }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             DB_NAME=${{ secrets.DB_NAME }}
+            DB_SOCKET_PATH=/cloudsql/${{ secrets.CLOUD_SQL_CONNECTION_NAME }}
 
   health-check:
     name: Health Check
