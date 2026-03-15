@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SpaceInvaders from '../SpaceInvaders/SpaceInvaders'
+import { INVADER_ART } from '../../constants/invaderArt'
 import styles from './EasterEgg.module.css'
 
 export default function EasterEgg() {
@@ -9,7 +10,7 @@ export default function EasterEgg() {
   return (
     <>
       <div className={styles.logo} onClick={() => setOpen(true)}>
-        &gt; space_invaders.exe
+        <pre className={styles.art}>{INVADER_ART.join('\n')}</pre>
       </div>
 
       <AnimatePresence>

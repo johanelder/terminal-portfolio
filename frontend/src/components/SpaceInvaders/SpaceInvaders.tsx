@@ -3,6 +3,7 @@ import {
   playShoot, playInvaderHit, playFlyByHit,
   playPlayerDeath, playMarchNote, startFlyByHum,
 } from '../../sounds/sounds'
+import { INVADER_ART } from '../../constants/invaderArt'
 import styles from './SpaceInvaders.module.css'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -306,17 +307,33 @@ export default function SpaceInvaders() {
     function drawStartScreen() {
       ctx.fillStyle = GREEN
       ctx.textAlign = 'center'
-      ctx.font = 'bold 22px "JetBrains Mono", monospace'
-      ctx.fillText('[ SPACE INVADERS ]', W / 2, H / 2 - 90)
+
+      // ASCII invader logo
+      const artSize = 16
+      const lineH = artSize * 1.4
+      const artTotalH = INVADER_ART.length * lineH
+      const artY = H / 2 - 130
+      ctx.font = `${artSize}px "JetBrains Mono", monospace`
+      INVADER_ART.forEach((line, i) => {
+        ctx.fillText(line, W / 2, artY + i * lineH)
+      })
+
+      // Title below art
+      ctx.font = 'bold 20px "JetBrains Mono", monospace'
+      ctx.fillText('[ SPACE INVADERS ]', W / 2, artY + artTotalH + 18)
+
+      // Controls
       ctx.font = '13px "JetBrains Mono", monospace'
-      ctx.fillText('← → to move', W / 2, H / 2 - 38)
-      ctx.fillText('SPACE to fire', W / 2, H / 2 - 16)
-      ctx.fillText('grid invader  =  10 pts', W / 2, H / 2 + 20)
-      ctx.fillText('fly-by ship   =  25 pts', W / 2, H / 2 + 42)
+      const ctrlY = artY + artTotalH + 54
+      ctx.fillText('← → to move    |    SPACE to fire', W / 2, ctrlY)
+      ctx.fillText('grid invader = 10 pts    fly-by ship = 25 pts', W / 2, ctrlY + 24)
+
+      // Blinking prompt
       if (Math.floor(Date.now() / 500) % 2 === 0) {
         ctx.font = 'bold 15px "JetBrains Mono", monospace'
-        ctx.fillText('> press SPACE to start', W / 2, H / 2 + 88)
+        ctx.fillText('> press SPACE to start', W / 2, ctrlY + 64)
       }
+
       ctx.textAlign = 'left'
     }
 
