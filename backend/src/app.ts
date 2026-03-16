@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth';
+import postsRouter from './routes/posts';
+import adminPostsRouter from './routes/adminPosts';
 
 const app = express();
 
@@ -16,5 +18,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/admin/posts', adminPostsRouter);
 
 export default app;

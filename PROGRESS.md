@@ -77,31 +77,43 @@
 
 ## Slice 5 — Login & Register Pages (Frontend)
 
-- [ ] React Router set up (`/`, `/login`, `/register`, `/admin`)
-- [ ] `/login` page — terminal-style form with outer box
-- [ ] `/register` page — terminal-style form with outer box
-- [ ] Typewriter effect on form field labels
-- [ ] JWT stored in httpOnly cookie (set by backend on login)
-- [ ] Auth context / hook for current user state
-- [ ] `>_` prompt redirects to `/login`, then back after login
-- [ ] Protected route wrapper — redirects to `/login` if not authenticated
-- [ ] `/admin` route protected (admin role required)
+- [x] React Router set up (`/`, `/login`, `/register`, `/admin`)
+- [x] `/login` page — terminal-style form with outer box, prompt-style fields (`> username:`, `> password:`)
+- [x] `/register` page — same aesthetic, three fields, navigates to `/login` on success
+- [x] Fade-in reveal on form field labels (typewriter-style opacity transition on mount)
+- [x] JWT stored in httpOnly cookie (SameSite=strict, Secure in prod, 7-day expiry)
+- [x] `authGuard` updated to read from `req.cookies.token`
+- [x] `cookie-parser` added to backend; CORS updated with `credentials: true` + `FRONTEND_ORIGIN` env var
+- [x] Auth tests updated — assert `set-cookie` on login, send `Cookie` header on `/me`
+- [x] `services/auth.ts` — all API calls use `credentials: 'include'`
+- [x] `hooks/useAuth.ts` — fetches current user on mount, exposes `logout()`
+- [x] `ProtectedRoute` component — redirects to `/login` if unauthenticated; to `/` if non-admin
+- [x] Header auth-aware: `>_ username [logout]` when logged in, `>_` link when logged out
+- [x] Admin header prompt: `#_ [root@terminal]` on the left when logged in as admin (links to `/admin`)
+- [x] `/admin` stub page (real content in Slice 6)
+- [x] Frontend `Dockerfile` updated — accepts `VITE_API_URL` as build arg
+- [x] `deploy.yml` updated — `VITE_API_URL` passed to Docker build; `FRONTEND_ORIGIN` + `NODE_ENV=production` added to backend Cloud Run env vars
+- [x] `FRONTEND_URL` added to GitHub Actions secrets
 
 ---
 
-## Slice 6 — Posts API & Admin Dashboard
+## Slice 6 — Posts API & Admin Dashboard ✅
 
-- [ ] `GET /api/posts` — public published posts
-- [ ] `GET /api/posts/:id` — single published post
-- [ ] `POST /api/admin/posts` — create post (admin)
-- [ ] `PUT /api/admin/posts/:id` — update post (admin)
-- [ ] `DELETE /api/admin/posts/:id` — delete post (admin)
-- [ ] `GET /api/admin/posts` — all posts including drafts (admin)
-- [ ] Admin dashboard UI — post list with draft/published status
-- [ ] Admin create post form
-- [ ] Admin edit post form
-- [ ] Admin delete post (with confirmation)
-- [ ] Published posts fetched and rendered in Projects panel on main page
+- [x] `GET /api/posts` — public published posts
+- [x] `GET /api/posts/:id` — single published post
+- [x] `POST /api/admin/posts` — create post (admin, title required, status validated)
+- [x] `PUT /api/admin/posts/:id` — partial update (only sent fields updated)
+- [x] `DELETE /api/admin/posts/:id` — delete post (admin)
+- [x] `GET /api/admin/posts` — all posts including drafts (admin)
+- [x] All admin routes protected by `adminGuard` at router level
+- [x] `tests/posts.test.ts` — full coverage: public routes + admin CRUD + auth enforcement
+- [x] `services/posts.ts` — frontend API calls for all post endpoints
+- [x] Published posts fetched on Shell mount, rendered in Projects panel (terminal-formatted string)
+- [x] Admin dashboard — post list with `[draft]` / `[published]` badges, edit and delete per row
+- [x] Admin create post form — terminal prompt-style fields, status radio toggle
+- [x] Admin edit post form — pre-populated from existing post data
+- [x] Delete with two-click confirmation (`[delete]` → `[confirm?]` → deleted)
+- [x] Delete error is swallowed gracefully, list reloads either way
 
 ---
 
@@ -116,4 +128,4 @@
 
 ---
 
-*Last updated: Slices 1, 2, 3 complete. Ready for Slice 4 (database + auth).*
+*Last updated: Slices 1–6 complete. Ready for Slice 7 (Polish & additional easter eggs).*
