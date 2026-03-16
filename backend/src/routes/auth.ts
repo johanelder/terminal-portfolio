@@ -47,6 +47,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
       res.status(409).json({ error: 'username or email already exists' });
       return;
     }
+    console.error('[register error]', err);
     res.status(500).json({ error: 'server error' });
   }
 });
@@ -93,7 +94,8 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     });
 
     res.json({ user: { id: user.id, username: user.username, role: user.role } });
-  } catch {
+  } catch (err) {
+    console.error('[login error]', err);
     res.status(500).json({ error: 'server error' });
   }
 });
@@ -110,7 +112,8 @@ router.get('/me', authGuard, async (req: Request, res: Response): Promise<void> 
       return;
     }
     res.json(rows[0]);
-  } catch {
+  } catch (err) {
+    console.error('[me error]', err);
     res.status(500).json({ error: 'server error' });
   }
 });
