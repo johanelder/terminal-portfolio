@@ -23,7 +23,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await pool.query('DROP TABLE IF EXISTS users');
-  await pool.end();
 });
 
 beforeEach(async () => {
