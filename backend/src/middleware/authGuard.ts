@@ -2,14 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 export function authGuard(req: Request, res: Response, next: NextFunction): void {
-  const header = req.headers.authorization;
+  const token: string | undefined = req.cookies?.token;
 
-  if (!header?.startsWith('Bearer ')) {
+  if (!token) {
     res.status(401).json({ error: 'no token provided' });
     return;
   }
-
-  const token = header.slice(7);
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number; role: string };

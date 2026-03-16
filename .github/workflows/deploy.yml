@@ -76,7 +76,10 @@ jobs:
 
       - name: Build & push frontend image
         run: |
-          docker build -t ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }} ./frontend
+          docker build \
+            --build-arg VITE_API_URL=${{ secrets.BACKEND_URL }} \
+            -t ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }} \
+            ./frontend
           docker push ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }}
 
       - name: Build & push backend image
@@ -118,6 +121,8 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             DB_NAME=${{ secrets.DB_NAME }}
             DB_SOCKET_PATH=/cloudsql/${{ secrets.CLOUD_SQL_CONNECTION_NAME }}
+            FRONTEND_ORIGIN=${{ secrets.FRONTEND_URL }}
+            NODE_ENV=production
 
   health-check:
     name: Health Check

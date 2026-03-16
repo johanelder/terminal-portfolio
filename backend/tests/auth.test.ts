@@ -77,15 +77,20 @@ describe('POST /api/auth/login', () => {
     await request(app).post('/api/auth/register').send(USER);
   });
 
-  it('returns token and user on valid credentials', async () => {
+  it('sets httpOnly cookie and returns user on valid credentials', async () => {
     const res = await request(app).post('/api/auth/login').send({
       username: USER.username,
       password: USER.password,
     });
     expect(res.status).toBe(200);
-    expect(res.body.token).toBeDefined();
+    expect(res.body.token).toBeUndefined();
     expect(res.body.user.username).toBe(USER.username);
     expect(res.body.user.password_hash).toBeUndefined();
+    const setCookie = res.headers['set-cookie'] as unknown as string[];
+    expect(setCookie).toBeDefined();
+    const cookieHeader = setCookie.join('; ');
+    expect(cookieHeader).toContain('token=');
+    expect(cookieHeader).toContain('HttpOnly');
   });
 
   it('returns 400 when fields are missing', async () => {
@@ -112,7 +117,7 @@ describe('POST /api/auth/login', () => {
 
 // ── Me ───────────────────────────────────────────────────────────────────────
 describe('GET /api/auth/me', () => {
-  let token: string;
+  let cookie: string;
 
   beforeEach(async () => {
     await request(app).post('/api/auth/register').send(USER);
@@ -120,27 +125,27 @@ describe('GET /api/auth/me', () => {
       username: USER.username,
       password: USER.password,
     });
-    token = res.body.token;
+    cookie = (res.headers['set-cookie'] as unknown as string[])[0];
   });
 
-  it('returns current user with valid token', async () => {
+  it('returns current user with valid cookie', async () => {
     const res = await request(app)
       .get('/api/auth/me')
-      .set('Authorization', `Bearer ${token}`);
+      .set('Cookie', cookie);
     expect(res.status).toBe(200);
     expect(res.body.username).toBe(USER.username);
     expect(res.body.password_hash).toBeUndefined();
   });
 
-  it('returns 401 with no token', async () => {
+  it('returns 401 with no cookie', async () => {
     const res = await request(app).get('/api/auth/me');
     expect(res.status).toBe(401);
   });
 
-  it('returns 401 with invalid token', async () => {
+  it('returns 401 with invalid cookie value', async () => {
     const res = await request(app)
       .get('/api/auth/me')
-      .set('Authorization', 'Bearer notavalidtoken');
+      .set('Cookie', 'token=notavalidtoken');
     expect(res.status).toBe(401);
   });
 });

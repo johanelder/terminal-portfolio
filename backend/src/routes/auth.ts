@@ -85,7 +85,14 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       { expiresIn: '7d' }
     );
 
-    res.json({ token, user: { id: user.id, username: user.username, role: user.role } });
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
+    });
+
+    res.json({ user: { id: user.id, username: user.username, role: user.role } });
   } catch {
     res.status(500).json({ error: 'server error' });
   }
@@ -109,8 +116,8 @@ router.get('/me', authGuard, async (req: Request, res: Response): Promise<void> 
 });
 
 // ── POST /api/auth/logout ───────────────────────────────────────────────────
-// JWT is stateless — logout is handled client-side by discarding the token.
 router.post('/logout', (_req: Request, res: Response): void => {
+  res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
   res.json({ message: 'logged out' });
 });
 
