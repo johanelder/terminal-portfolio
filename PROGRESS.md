@@ -128,4 +128,21 @@
 
 ---
 
-*Last updated: Slices 1–6 complete. Ready for Slice 7 (Polish & additional easter eggs).*
+---
+
+## Current Blocker — Production Login 500 Error
+
+- Login returns 500 in production (works in tests against CI MySQL)
+- Root cause identified: `ENOENT errno -2` in Cloud Run backend logs — Cloud SQL socket file not being created at `/cloudsql/[CONNECTION_NAME]`
+- This means the Cloud SQL Auth Proxy is not mounting correctly on the Cloud Run instance
+- `console.error` added to all auth route catch blocks so errors now surface in Cloud Run logs
+- **Code is correct — this is a GCP configuration issue**
+
+**Steps to try next session (in order):**
+1. **GCP Console → IAM & Admin → IAM** — confirm the Cloud Run service account has the **Cloud SQL Client** role. This is the most likely cause.
+2. **GitHub → Settings → Secrets → `CLOUD_SQL_CONNECTION_NAME`** — confirm value is exactly `project-id:us-central1:instance-name` (no spaces, no quotes, no newlines)
+3. **GCP Console → Cloud Run → `portfolio-backend` → Edit & Deploy New Revision → Connections tab** — confirm the Cloud SQL instance is listed. If not, the `cloudsql_instances` value was malformed on last deploy.
+
+---
+
+*Last updated: Slices 1–6 complete, production login blocked by Cloud SQL socket issue. See blocker section above.*
