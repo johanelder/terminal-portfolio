@@ -343,7 +343,7 @@ export default function SpaceInvaders() {
       ctx.fillStyle = GREEN
       ctx.textAlign = 'center'
       ctx.font = 'bold 20px "JetBrains Mono", monospace'
-      ctx.fillText(status === 'won' ? '> round complete' : '> session terminated', W / 2, H / 2 - 24)
+      ctx.fillText(status === 'won' ? '> GAME OVER' : '> session terminated', W / 2, H / 2 - 24)
       ctx.font = '15px "JetBrains Mono", monospace'
       ctx.fillText(`final score: ${score}`, W / 2, H / 2 + 14)
       ctx.textAlign = 'left'

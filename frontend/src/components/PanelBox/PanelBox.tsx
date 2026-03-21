@@ -29,7 +29,7 @@ export default function PanelBox({ label, content, isOpen, onOpen, onClose }: Pr
             initial={{ opacity: 0, scaleY: 0.05, scaleX: 0.4 }}
             animate={{ opacity: 1, scaleY: 1, scaleX: 1 }}
             exit={{ opacity: 0, scaleY: 0.05, scaleX: 0.4 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
             style={{ originX: 0.5, originY: 0 }}
           >
             <button className={styles.closeBtn} onClick={onClose}>[x]</button>
