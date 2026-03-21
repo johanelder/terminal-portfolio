@@ -1,2 +1,2 @@
 # terminal-portfolio
-A simple portfolio site to play around with using a specific aesthetic.
+A simple portfolio site to play around with using a specific aesthetic, and an easter egg video game.
