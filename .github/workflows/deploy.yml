@@ -77,7 +77,6 @@ jobs:
       - name: Build & push frontend image
         run: |
           docker build \
-            --build-arg VITE_API_URL=${{ secrets.BACKEND_URL }} \
             -t ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }} \
             ./frontend
           docker push ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }}
@@ -106,6 +105,7 @@ jobs:
           region: ${{ env.GCP_REGION }}
           image: ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/frontend:${{ github.sha }}
           flags: --allow-unauthenticated
+          env_vars: BACKEND_URL=${{ secrets.BACKEND_URL }}
 
       - name: Deploy backend to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
