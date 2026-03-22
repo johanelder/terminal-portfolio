@@ -86,10 +86,11 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       { expiresIn: '7d' }
     );
 
+    const isProd = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      sameSite: 'strict',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: isProd ? 'none' : 'strict',
+      secure: isProd,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
     });
 
@@ -120,7 +121,8 @@ router.get('/me', authGuard, async (req: Request, res: Response): Promise<void> 
 
 // ── POST /api/auth/logout ───────────────────────────────────────────────────
 router.post('/logout', (_req: Request, res: Response): void => {
-  res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' });
+  const isProd = process.env.NODE_ENV === 'production';
+  res.clearCookie('token', { httpOnly: true, sameSite: isProd ? 'none' : 'strict', secure: isProd });
   res.json({ message: 'logged out' });
 });
 
