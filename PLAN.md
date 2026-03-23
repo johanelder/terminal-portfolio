@@ -309,11 +309,34 @@ Slice 6 — Posts API & Admin Dashboard
   ├── Create / edit / delete posts
   └── Published posts appear in Projects panel on main page
 
-Slice 7 — Polish & additional easter eggs
-  ├── Refine animations and timing
-  ├── Additional easter eggs (TBD)
-  ├── Mobile responsiveness (if desired)
-  └── Final review and cleanup
+Slice 7 — Polish & Missile Command easter egg
+  ├── Sub-task 1 — Logo repositioning
+  │   ├── EasterEgg component refactored to two-logo layout
+  │   ├── Space Invaders logo moves to right half of bottom (left: 75%)
+  │   ├── Missile Command logo added to left half (left: 25%)
+  │   └── Each panel animates from its logo's originX (0.25 / 0.75)
+  ├── Sub-task 2 — Missile Command game
+  │   ├── MissileCommand canvas component (same pattern as SpaceInvaders)
+  │   ├── 2 launchers — bottom-left and bottom-right
+  │   ├── 3 cities — evenly spaced across the bottom
+  │   ├── Incoming missiles — lines from random top positions toward city/launcher targets
+  │   ├── Counter-missiles — fired from nearest launcher to mouse click point
+  │   ├── Explosions — expanding/contracting circle, destroys intersecting missiles
+  │   ├── Mushroom cloud — canvas animation on city destruction
+  │   ├── Waves — increasing count and speed per wave
+  │   ├── Score display, game over screen
+  │   └── Sound effects (Web Audio API — launch, explosion, city destruction, game over)
+  ├── Sub-task 3 — Real panel content
+  │   ├── About panel — final text
+  │   └── Resume panel — final text
+  ├── Sub-task 4 — Mobile
+  │   ├── Both easter egg logos hidden on mobile (max-width: 768px)
+  │   └── Main panels readable on small screens
+  └── Sub-task 5 — Final cleanup & production smoke test
+
+Notes:
+  - Future third easter egg: logos shift to left: 25% / right: 75%, new egg takes left: 50%
+  - Both games are desktop-only by design (hover + mouse click mechanics)
 ```
 
 ---

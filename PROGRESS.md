@@ -117,12 +117,35 @@
 
 ---
 
-## Slice 7 — Polish & Additional Easter Eggs
+## Slice 7 — Polish & Missile Command Easter Egg
 
-- [ ] Animation timing refinement
-- [ ] Additional easter eggs (TBD)
-- [ ] Mobile responsiveness review
-- [ ] Final accessibility pass
+### Sub-task 1 — Logo repositioning
+- [x] `MISSILE_ART` constant added to `constants/missileArt.ts`
+- [x] `EasterEgg` component refactored: two logos, shared `active` state
+- [x] Space Invaders logo repositioned to right half (left: 75%)
+- [x] Missile Command logo added to left half (left: 25%)
+- [x] Each panel animates from its logo's originX
+
+### Sub-task 2 — Missile Command game
+- [x] `MissileCommand/MissileCommand.tsx` canvas component
+- [x] 2 launchers (bottom-left, bottom-right), 3 cities (evenly spaced)
+- [x] Incoming missiles — lines targeting cities/launchers
+- [x] Counter-missiles — fire from nearest launcher on mouse click
+- [x] Explosion radius — destroys intersecting incoming missiles
+- [x] Mushroom cloud animation on city destruction
+- [x] Wave system — increasing count and speed
+- [x] Score display and game over screen
+- [x] Sound effects (Web Audio API)
+
+### Sub-task 3 — Real panel content
+- [ ] About panel — final text from user
+- [ ] Resume panel — final text from user
+
+### Sub-task 4 — Mobile
+- [ ] Easter egg logos hidden on mobile (max-width: 768px)
+- [ ] Main panels readable check on small screens
+
+### Sub-task 5 — Final
 - [ ] Final code review and cleanup
 - [ ] Production smoke test
 
@@ -130,19 +153,4 @@
 
 ---
 
-## Current Blocker — Production Login 500 Error
-
-- Login returns 500 in production (works in tests against CI MySQL)
-- Root cause identified: `ENOENT errno -2` in Cloud Run backend logs — Cloud SQL socket file not being created at `/cloudsql/[CONNECTION_NAME]`
-- This means the Cloud SQL Auth Proxy is not mounting correctly on the Cloud Run instance
-- `console.error` added to all auth route catch blocks so errors now surface in Cloud Run logs
-- **Code is correct — this is a GCP configuration issue**
-
-**Steps to try next session (in order):**
-1. **GCP Console → IAM & Admin → IAM** — confirm the Cloud Run service account has the **Cloud SQL Client** role. This is the most likely cause.
-2. **GitHub → Settings → Secrets → `CLOUD_SQL_CONNECTION_NAME`** — confirm value is exactly `project-id:us-central1:instance-name` (no spaces, no quotes, no newlines)
-3. **GCP Console → Cloud Run → `portfolio-backend` → Edit & Deploy New Revision → Connections tab** — confirm the Cloud SQL instance is listed. If not, the `cloudsql_instances` value was malformed on last deploy.
-
----
-
-*Last updated: Slices 1–6 complete, production login blocked by Cloud SQL socket issue. See blocker section above.*
+*Last updated: Slices 1–6 complete and verified in production. Slice 7 in progress.*

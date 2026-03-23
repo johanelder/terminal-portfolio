@@ -1,14 +1,21 @@
 .logo {
   position: fixed;
   bottom: 48px;
-  left: 50%;
-  transform: translateX(-50%);
   color: var(--color-green);
   opacity: 0;
   cursor: pointer;
   user-select: none;
   transition: opacity 0.35s, text-shadow 0.35s;
   text-align: center;
+  transform: translateX(-50%);
+}
+
+.logoLeft {
+  left: 25%;
+}
+
+.logoRight {
+  left: 75%;
 }
 
 .logo:hover {
