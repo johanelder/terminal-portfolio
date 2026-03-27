@@ -6,7 +6,7 @@ interface Props {
   active?: boolean
 }
 
-export default function TypewriterText({ text, speed = 60, active = true }: Props) {
+export default function TypewriterText({ text, speed = 15, active = true }: Props) {
   const displayed = useTypewriter(text, speed, active)
 
   return (
