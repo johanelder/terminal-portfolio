@@ -533,17 +533,36 @@ export default function MissileCommand() {
       ctx.fillRect(0, 0, W, H)
       ctx.fillStyle = GREEN
       ctx.textAlign = 'center'
+
+      // Logo
+      const artSize = 12
+      const lineH   = artSize * 1.65
+      const artY    = 36
+      ctx.font = `${artSize}px "JetBrains Mono", monospace`
+      glow(6)
+      MISSILE_ART.forEach((line, i) => ctx.fillText(line, W / 2, artY + i * lineH))
+      noGlow()
+
+      // GAME OVER title
+      const artBottom = artY + MISSILE_ART.length * lineH
       ctx.font = 'bold 20px "JetBrains Mono", monospace'
+      glow(14)
+      ctx.fillText('[ GAME OVER ]', W / 2, artBottom + 26)
+      noGlow()
+
+      // Stats
+      const statsY = artBottom + 66
       const reason = launchers.every(l => !l.alive) && cities.some(c => c.alive)
         ? '> LAUNCHERS DESTROYED'
         : '> CITIES DESTROYED'
-      ctx.fillText(reason, W / 2, H / 2 - 42)
-      ctx.font = '15px "JetBrains Mono", monospace'
-      ctx.fillText(`final score: ${score}`, W / 2, H / 2 - 8)
-      ctx.fillText(`waves survived: ${wave}`, W / 2, H / 2 + 18)
+      ctx.font = 'bold 16px "JetBrains Mono", monospace'
+      ctx.fillText(reason, W / 2, statsY)
+      ctx.font = '14px "JetBrains Mono", monospace'
+      ctx.fillText(`final score: ${score}`, W / 2, statsY + 28)
+      ctx.fillText(`waves survived: ${wave}`, W / 2, statsY + 52)
       if (Math.floor(Date.now() / 500) % 2 === 0) {
-        ctx.font = 'bold 14px "JetBrains Mono", monospace'
-        ctx.fillText('> click to restart', W / 2, H / 2 + 58)
+        ctx.font = 'bold 13px "JetBrains Mono", monospace'
+        ctx.fillText('> click to restart', W / 2, statsY + 88)
       }
       ctx.textAlign = 'left'
     }

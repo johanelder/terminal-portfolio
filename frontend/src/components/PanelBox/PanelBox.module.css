@@ -50,3 +50,13 @@
   line-height: 1.8;
   font-size: 0.95rem;
 }
+
+.content a {
+  text-decoration: underline;
+  cursor: pointer;
+  transition: text-shadow 0.15s;
+}
+
+.content a:hover {
+  text-shadow: var(--color-glow);
+}

@@ -12,7 +12,7 @@ function renderWithLinks(text: string): React.ReactNode {
   const parts = text.split(URL_RE)
   return parts.map((part, i) =>
     /^https?:\/\//.test(part) ? (
-      <a key={i} href={part} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>
+      <a key={i} href={part} target="_blank" rel="noreferrer">
         {part}
       </a>
     ) : (
