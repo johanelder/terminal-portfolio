@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   fetchAllPosts,
   createPost,
@@ -20,6 +21,7 @@ const EMPTY_FORM: PostInput = {
 }
 
 export default function Admin() {
+  const navigate = useNavigate()
   const [view, setView] = useState<View>('list')
   const [posts, setPosts] = useState<Post[]>([])
   const [editTarget, setEditTarget] = useState<Post | null>(null)
@@ -102,8 +104,11 @@ export default function Admin() {
   if (view === 'create' || view === 'edit') {
     return (
       <div className={styles.page}>
-        <div className={styles.title}>
-          #_ [root@terminal] — {view === 'create' ? 'new post' : 'edit post'}
+        <div className={styles.topBar}>
+          <button className={styles.backBtn} onClick={() => navigate('/')}>&gt;_cd..</button>
+          <div className={styles.title}>
+            #_ [root@terminal] — {view === 'create' ? 'new post' : 'edit post'}
+          </div>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
@@ -192,7 +197,10 @@ export default function Admin() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.title}>#_ [root@terminal] — Admin Dashboard</div>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate('/')}>&gt;_cd..</button>
+        <div className={styles.title}>#_ [root@terminal] — Admin Dashboard</div>
+      </div>
 
       <button className={styles.newPostBtn} onClick={openCreate}>
         &gt; + new post
