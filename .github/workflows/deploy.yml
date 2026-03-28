@@ -118,7 +118,7 @@ jobs:
           flags: |
             --allow-unauthenticated
             --add-cloudsql-instances=${{ secrets.CLOUD_SQL_CONNECTION_NAME }}
-            --startup-cpu-boost
+            --cpu-boost
 
           # -- Old approach --
           # flags: --allow-unauthenticated
