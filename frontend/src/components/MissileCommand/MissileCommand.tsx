@@ -45,6 +45,11 @@ interface City {
   alive: boolean
 }
 
+interface Launcher {
+  x: number
+  alive: boolean
+}
+
 type Status = 'start' | 'playing' | 'gameover'
 
 export default function MissileCommand() {
@@ -71,10 +76,11 @@ export default function MissileCommand() {
     ]
 
     // ─── State ────────────────────────────────────────────────────────────────
-    let status: Status = 'start'
-    let score          = 0
-    let wave           = 0
-    let cities: City[] = []
+    let status: Status    = 'start'
+    let score             = 0
+    let wave              = 0
+    let cities: City[]    = []
+    let launchers: Launcher[] = []
     let incoming: IncomingMissile[] = []
     let counters: CounterMissile[]  = []
     let explosions: Explosion[]     = []
@@ -93,9 +99,13 @@ export default function MissileCommand() {
 
     // ─── Init / wave ──────────────────────────────────────────────────────────
     function initGame() {
-      score      = 0
-      wave       = 0
-      cities     = CITY_XS.map(x => ({ x, alive: true }))
+      score     = 0
+      wave      = 0
+      cities    = CITY_XS.map(x => ({ x, alive: true }))
+      launchers = [
+        { x: LAUNCHER_L_X, alive: true },
+        { x: LAUNCHER_R_X, alive: true },
+      ]
       incoming   = []
       counters   = []
       explosions = []
@@ -115,14 +125,16 @@ export default function MissileCommand() {
 
     // ─── Spawn ────────────────────────────────────────────────────────────────
     function spawnIncoming() {
-      const live = cities.filter(c => c.alive)
-      if (live.length === 0) return
+      const liveCities   = cities.filter(c => c.alive)
+      const liveLaunchers = launchers.filter(l => l.alive)
+      if (liveCities.length === 0) return
       let targetX: number
-      if (Math.random() < 0.72) {
-        const t = live[Math.floor(Math.random() * live.length)]
+      if (Math.random() < 0.72 || liveLaunchers.length === 0) {
+        const t = liveCities[Math.floor(Math.random() * liveCities.length)]
         targetX = t.x + (Math.random() * 18 - 9)
       } else {
-        targetX = Math.random() < 0.5 ? LAUNCHER_L_X : LAUNCHER_R_X
+        const t = liveLaunchers[Math.floor(Math.random() * liveLaunchers.length)]
+        targetX = t.x + (Math.random() * 12 - 6)
       }
       const startX   = W * 0.08 + Math.random() * W * 0.84
       const startY   = 0
@@ -143,9 +155,12 @@ export default function MissileCommand() {
     }
 
     function fireCounter(mouseX: number, mouseY: number) {
-      const fromLeft  = dist(mouseX, mouseY, LAUNCHER_L_X, LAUNCHER_Y)
-      const fromRight = dist(mouseX, mouseY, LAUNCHER_R_X, LAUNCHER_Y)
-      const lx        = fromLeft <= fromRight ? LAUNCHER_L_X : LAUNCHER_R_X
+      const aliveLaunchers = launchers.filter(l => l.alive)
+      if (aliveLaunchers.length === 0) return
+      const chosen = aliveLaunchers.reduce((best, l) =>
+        dist(mouseX, mouseY, l.x, LAUNCHER_Y) < dist(mouseX, mouseY, best.x, LAUNCHER_Y) ? l : best
+      )
+      const lx = chosen.x
       const ly        = LAUNCHER_Y - 24          // tip of launcher
       const dx_raw    = mouseX - lx
       const dy_raw    = mouseY - ly
@@ -186,8 +201,10 @@ export default function MissileCommand() {
 
       if (waveBannerTimer > 0) waveBannerTimer -= delta
 
-      // Game over once all cities gone and final mushroom clouds settle
-      if (cities.every(c => !c.alive) && mushrooms.every(m => m.done)) {
+      // Game over once all cities (or all launchers) gone and mushroom clouds settle
+      const allCitiesGone    = cities.every(c => !c.alive)
+      const allLaunchersGone = launchers.every(l => !l.alive)
+      if ((allCitiesGone || allLaunchersGone) && mushrooms.every(m => m.done)) {
         status = 'gameover'
         playMCGameOver()
         return
@@ -210,12 +227,24 @@ export default function MissileCommand() {
         m.y += m.dy * m.speed * dt
         if (m.y >= GROUND_Y) {
           m.reachedGround = true
+          let hit = false
           for (const city of cities) {
             if (city.alive && Math.abs(m.x - city.x) < 36) {
               city.alive = false
               createMushroom(city.x, GROUND_Y)
               playMCCityHit()
+              hit = true
               break
+            }
+          }
+          if (!hit) {
+            for (const launcher of launchers) {
+              if (launcher.alive && Math.abs(m.x - launcher.x) < 30) {
+                launcher.alive = false
+                createMushroom(launcher.x, GROUND_Y)
+                playMCCityHit()
+                break
+              }
             }
           }
         }
@@ -301,7 +330,17 @@ export default function MissileCommand() {
       ctx.globalAlpha = 1
     }
 
-    function drawLauncher(x: number) {
+    function drawLauncher(launcher: Launcher) {
+      const x = launcher.x
+      if (!launcher.alive) {
+        // Rubble — same style as destroyed city
+        ctx.fillStyle   = GREEN
+        ctx.globalAlpha = 0.45
+        for (let i = 0; i < 5; i++)
+          ctx.fillRect(x - 14 + i * 7, GROUND_Y - 2 - (i % 2) * 3, 5, 3)
+        ctx.globalAlpha = 1
+        return
+      }
       ctx.fillStyle = GREEN
       glow(8)
       ctx.fillRect(x - 12, GROUND_Y - 8,  24, 8)   // base plate
@@ -440,7 +479,10 @@ export default function MissileCommand() {
       ctx.textAlign = 'left'
       ctx.fillText(`> score: ${score}`, 14, 20)
       ctx.textAlign = 'center'
-      ctx.fillText(`cities: ${cities.filter(c => c.alive).length} / 3`, W / 2, 20)
+      ctx.fillText(
+        `cities: ${cities.filter(c => c.alive).length}/3  launchers: ${launchers.filter(l => l.alive).length}/2`,
+        W / 2, 20
+      )
       ctx.textAlign = 'right'
       ctx.fillText(`wave: ${wave}`, W - 14, 20)
       ctx.textAlign = 'left'
@@ -492,7 +534,10 @@ export default function MissileCommand() {
       ctx.fillStyle = GREEN
       ctx.textAlign = 'center'
       ctx.font = 'bold 20px "JetBrains Mono", monospace'
-      ctx.fillText('> CITIES DESTROYED', W / 2, H / 2 - 42)
+      const reason = launchers.every(l => !l.alive) && cities.some(c => c.alive)
+        ? '> LAUNCHERS DESTROYED'
+        : '> CITIES DESTROYED'
+      ctx.fillText(reason, W / 2, H / 2 - 42)
       ctx.font = '15px "JetBrains Mono", monospace'
       ctx.fillText(`final score: ${score}`, W / 2, H / 2 - 8)
       ctx.fillText(`waves survived: ${wave}`, W / 2, H / 2 + 18)
@@ -511,8 +556,7 @@ export default function MissileCommand() {
       if (status === 'start') { drawStartScreen(); return }
 
       drawGround()
-      drawLauncher(LAUNCHER_L_X)
-      drawLauncher(LAUNCHER_R_X)
+      for (const launcher of launchers) drawLauncher(launcher)
       for (const city of cities)  drawCity(city)
       for (const m    of incoming) drawIncoming(m)
       for (const c    of counters) drawCounter(c)
