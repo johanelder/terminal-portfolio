@@ -3,6 +3,7 @@ import Shell from './components/Shell/Shell'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Admin from './pages/Admin'
+import Users from './pages/Users'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 export default function App() {
@@ -17,6 +18,14 @@ export default function App() {
           element={
             <ProtectedRoute requireAdmin>
               <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute requireAdmin>
+              <Users />
             </ProtectedRoute>
           }
         />

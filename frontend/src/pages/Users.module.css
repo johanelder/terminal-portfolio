@@ -1,0 +1,197 @@
+.page {
+  min-height: 100vh;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.backBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: opacity 0.15s, text-shadow 0.15s;
+}
+
+.backBtn:hover {
+  opacity: 1;
+  text-shadow: var(--color-glow);
+}
+
+.title {
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── User list ──────────────────────────────────────────────────────────────── */
+
+.userList {
+  display: flex;
+  flex-direction: column;
+}
+
+.userRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 0.5px solid rgba(0, 255, 0, 0.2);
+}
+
+.userRow:first-child {
+  border-top: 0.5px solid rgba(0, 255, 0, 0.2);
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userName {
+  font-size: 1rem;
+}
+
+.youBadge {
+  opacity: 0.5;
+  font-size: 0.85rem;
+}
+
+.userDetail {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.userActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Role badge ─────────────────────────────────────────────────────────────── */
+
+.badge {
+  font-size: 0.75rem;
+  border: 1px solid var(--color-green);
+  padding: 1px 6px;
+  opacity: 0.7;
+}
+
+.badge.admin {
+  opacity: 1;
+  box-shadow: 0 0 4px #00FF00;
+}
+
+/* ── Role toggle ────────────────────────────────────────────────────────────── */
+
+.roleToggle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.roleBtn {
+  background: transparent;
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 2px 10px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+
+.roleBtn:hover:not(:disabled) {
+  opacity: 1;
+  box-shadow: var(--color-glow);
+}
+
+.roleBtn.roleActive {
+  opacity: 1;
+  border-color: var(--color-green);
+  box-shadow: 0 0 4px #00FF00;
+}
+
+.roleBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+
+.btn {
+  background: transparent;
+  border: none;
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0;
+  cursor: pointer;
+  transition: text-shadow 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  text-shadow: var(--color-glow);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btnDanger {
+  composes: btn;
+}
+
+.btnDanger:hover:not(:disabled) {
+  text-shadow: 0 0 6px #ff4444, 0 0 18px #ff4444;
+  color: #ff6666;
+}
+
+.cancelBtn {
+  background: transparent;
+  border: none;
+  color: var(--color-green);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.cancelBtn:hover {
+  opacity: 1;
+}
+
+/* ── Error ──────────────────────────────────────────────────────────────────── */
+
+.error {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.error::before {
+  content: '! ';
+}
+
+.empty {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  padding: 16px 0;
+}

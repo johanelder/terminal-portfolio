@@ -129,6 +129,12 @@
   color: #ff6666;
 }
 
+.actionBar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
 .newPostBtn {
   background: transparent;
   border: 1px solid var(--color-green);
@@ -145,6 +151,10 @@
 .newPostBtn:hover {
   box-shadow: var(--color-glow);
   text-shadow: var(--color-glow);
+}
+
+.usersBtn {
+  composes: newPostBtn;
 }
 
 /* ── Form ──────────────────────────────────────────────────────────────────── */

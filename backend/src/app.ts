@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRouter from './routes/auth';
 import postsRouter from './routes/posts';
 import adminPostsRouter from './routes/adminPosts';
+import adminUsersRouter from './routes/adminUsers';
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/admin/posts', adminPostsRouter);
+app.use('/api/admin/users', adminUsersRouter);
 
 export default app;

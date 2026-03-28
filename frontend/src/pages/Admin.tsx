@@ -202,9 +202,14 @@ export default function Admin() {
         <div className={styles.title}>#_ [root@terminal] — Admin Dashboard</div>
       </div>
 
-      <button className={styles.newPostBtn} onClick={openCreate}>
-        &gt; + new post
-      </button>
+      <div className={styles.actionBar}>
+        <button className={styles.newPostBtn} onClick={openCreate}>
+          &gt; + new post
+        </button>
+        <button className={styles.usersBtn} onClick={() => navigate('/admin/users')}>
+          &gt;_users
+        </button>
+      </div>
 
       <div className={styles.postList}>
         {posts.length === 0 && (
